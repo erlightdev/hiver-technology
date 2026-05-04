@@ -1,3 +1,3 @@
 {
-  "extends": "@Hiver-Technology/config/tsconfig.base.json"
+	"extends": "@Hiver-Technology/config/tsconfig.base.json"
 }
