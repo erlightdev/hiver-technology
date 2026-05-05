@@ -142,8 +142,8 @@ export default function Footer() {
 	const year = new Date().getFullYear();
 
 	return (
-		<div className="bg-neutral-100 p-4 py-2.5">
-			<footer className="relative mx-auto w-full overflow-hidden rounded-[2rem] bg-gradient-to-b from-amber-900 via-[#170c03] to-[#0a0500] py-10 text-amber-50/80 shadow-2xl">
+		<div className=" p-2.5 md:p-3.5 py-2.5">
+			<footer className="relative mx-auto w-full overflow-hidden rounded-3xl bg-gradient-to-b from-amber-900 via-[#170c03] to-[#0a0500] py-10 text-amber-50/80 shadow-2xl px-4 md:px-8">
 				<div className="mx-auto grid max-w-[1300px] grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8 xl:grid-cols-4">
 					<FooterColumn title="Services" items={services} />
 					<FooterColumn title="Marketing" items={marketingServices} />
