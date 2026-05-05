@@ -1,134 +1,356 @@
 import {
 	BarChart3,
-	BriefcaseBusiness,
-	Building2,
+	BookOpen,
+	CalendarCheck,
 	ChevronDown,
-	ChevronRight,
+	ClipboardList,
 	Code2,
+	Database,
+	Factory,
+	Globe,
+	GraduationCap,
+	Heart,
+	Landmark,
+	type LucideIcon,
 	Mail,
+	MapPin,
+	Megaphone,
 	Menu,
-	Package,
+	Monitor,
+	MousePointer2,
+	Newspaper,
+	Palette,
+	Plane,
+	RefreshCw,
 	Search,
-	Workflow,
+	Settings2,
+	Share2,
+	ShoppingBag,
+	ShoppingCart,
+	Smartphone,
+	Star,
+	Target,
+	TrendingUp,
+	UserCheck,
+	UserPlus,
+	Users,
+	Zap,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import logoUrl from "../../public/Hiver-logo-web-dark.svg";
 import { ModeToggle } from "../mode-toggle";
 
-const buildServices = [
-	{ label: "Web Applications", href: "/services/web-applications" },
-	{ label: "Mobile Apps", href: "/services/mobile-apps" },
-	{ label: "Responsive Websites", href: "/services/responsive-websites" },
-	{ label: "CRM Applications", href: "/services/crm" },
-	{ label: "UI/UX Design", href: "/services/ui-ux-design" },
-];
+// ─── types ───────────────────────────────────────────────────────────────────
 
-const marketingServices = [
-	{ label: "Digital Marketing", href: "/services/digital-marketing" },
-	{ label: "Email Marketing", href: "/services/email-marketing" },
-	{ label: "Social Media Marketing", href: "/services/social-media-marketing" },
-	{ label: "Meta Ads Campaigns", href: "/services/meta-ads" },
-	{ label: "Landing Page Funnels", href: "/services/landing-page-funnels" },
-];
+type RichItem = {
+	label: string;
+	href: string;
+	description: string;
+	icon: LucideIcon;
+};
 
-const seoServices = [
-	{ label: "SEO Services", href: "/services/seo" },
-	{ label: "WordPress SEO", href: "/services/seo/wordpress" },
-	{ label: "Shopify SEO", href: "/services/seo/shopify" },
-	{ label: "Ecommerce SEO", href: "/services/seo/ecommerce" },
-	{ label: "Technical SEO", href: "/services/seo/technical" },
-	{ label: "Local SEO", href: "/services/seo/local" },
-	{ label: "SEO Audit", href: "/services/seo/audit" },
-];
+type RichDropdownConfig = {
+	label: string;
+	exploreHref: string;
+	exploreTitle: string;
+	exploreDescription: string;
+	sectionLabel: string;
+	headerIcon: LucideIcon;
+	items: RichItem[];
+};
 
-const automationServices = [
-	{ label: "Marketing Automation", href: "/services/marketing-automation" },
-	{ label: "Lead Nurturing Campaigns", href: "/services/lead-nurturing" },
-	{ label: "Newsletter Campaigns", href: "/services/newsletter-campaigns" },
-	{
-		label: "Abandoned Cart Automation",
-		href: "/services/abandoned-cart-automation",
-	},
-	{ label: "CRM Follow-up Automation", href: "/services/crm-automation" },
-];
+type SolutionGroup = {
+	title: string;
+	href: string;
+	items: RichItem[];
+};
 
-const products = [
-	{ label: "School Management", href: "/products/school-management" },
-	{ label: "Dental Management", href: "/products/dental-management" },
-	{ label: "Clinic Management", href: "/products/clinic-management" },
-	{ label: "HR Software", href: "/products/hr-software" },
-	{ label: "Employee Management", href: "/products/employee-management" },
-];
+// ─── data ────────────────────────────────────────────────────────────────────
 
-const industries = [
-	{ label: "Education", href: "/industries/education" },
-	{ label: "Health", href: "/industries/health" },
-	{ label: "Travel", href: "/industries/travel" },
-	{ label: "Banks & Finance", href: "/industries/finance" },
-	{ label: "Ecommerce", href: "/industries/ecommerce" },
-	{ label: "Manufacturing", href: "/industries/manufacturing" },
-];
+const buildConfig: RichDropdownConfig = {
+	label: "Build",
+	exploreHref: "/services",
+	exploreTitle: "Explore Build Services",
+	exploreDescription: "Custom software and user experience work.",
+	sectionLabel: "By technology",
+	headerIcon: Code2,
+	items: [
+		{
+			label: "Web Applications",
+			href: "/services/web-applications",
+			description: "Custom web apps built to scale",
+			icon: Globe,
+		},
+		{
+			label: "Mobile Apps",
+			href: "/services/mobile-apps",
+			description: "iOS and Android native experiences",
+			icon: Smartphone,
+		},
+		{
+			label: "Responsive Websites",
+			href: "/services/responsive-websites",
+			description: "Fast, beautiful sites on every device",
+			icon: Monitor,
+		},
+		{
+			label: "CRM Applications",
+			href: "/services/crm",
+			description: "Manage leads, clients and pipelines",
+			icon: Database,
+		},
+		{
+			label: "UI/UX Design",
+			href: "/services/ui-ux-design",
+			description: "Interfaces that convert and delight",
+			icon: Palette,
+		},
+	],
+};
 
-const useCases = [
-	{ label: "Lead Generation", href: "/use-cases/lead-generation" },
-	{ label: "Online Booking", href: "/use-cases/online-booking" },
-	{ label: "Customer Retention", href: "/use-cases/customer-retention" },
-	{ label: "Operations Automation", href: "/use-cases/operations-automation" },
-	{ label: "Reporting Dashboards", href: "/use-cases/reporting-dashboards" },
-];
+const marketingConfig: RichDropdownConfig = {
+	label: "Marketing",
+	exploreHref: "/services/digital-marketing",
+	exploreTitle: "Explore Marketing",
+	exploreDescription: "Campaigns, funnels, and paid growth systems.",
+	sectionLabel: "By channel",
+	headerIcon: TrendingUp,
+	items: [
+		{
+			label: "Digital Marketing",
+			href: "/services/digital-marketing",
+			description: "Full-funnel campaigns that drive growth",
+			icon: TrendingUp,
+		},
+		{
+			label: "Email Marketing",
+			href: "/services/email-marketing",
+			description: "Sequences that nurture and convert",
+			icon: Mail,
+		},
+		{
+			label: "Social Media Marketing",
+			href: "/services/social-media-marketing",
+			description: "Content that builds audience and trust",
+			icon: Share2,
+		},
+		{
+			label: "Meta Ads Campaigns",
+			href: "/services/meta-ads",
+			description: "Targeted paid ads that perform",
+			icon: Megaphone,
+		},
+		{
+			label: "Landing Page Funnels",
+			href: "/services/landing-page-funnels",
+			description: "Pages optimised to capture leads",
+			icon: MousePointer2,
+		},
+	],
+};
 
-const serviceGroups = [
-	{
-		title: "Build",
-		description: "Custom software and user experience work.",
-		href: "/services",
-		icon: Code2,
-		items: buildServices,
-	},
-	{
-		title: "Marketing",
-		description: "Campaigns, funnels, and paid growth systems.",
-		href: "/services/digital-marketing",
-		icon: BarChart3,
-		items: marketingServices,
-	},
-	{
-		title: "SEO",
-		description: "Search visibility for websites and ecommerce.",
-		href: "/services/seo",
-		icon: Search,
-		items: seoServices,
-	},
-	{
-		title: "Automation",
-		description: "Follow-up, lifecycle, and CRM workflows.",
-		href: "/services/marketing-automation",
-		icon: Workflow,
-		items: automationServices,
-	},
-];
+const seoConfig: RichDropdownConfig = {
+	label: "SEO",
+	exploreHref: "/services/seo",
+	exploreTitle: "Explore SEO Services",
+	exploreDescription: "Search visibility for websites and ecommerce.",
+	sectionLabel: "By type",
+	headerIcon: Search,
+	items: [
+		{
+			label: "WordPress SEO",
+			href: "/services/seo/wordpress",
+			description: "SEO tailored for WordPress sites",
+			icon: Globe,
+		},
+		{
+			label: "Shopify SEO",
+			href: "/services/seo/shopify",
+			description: "Drive organic sales to your store",
+			icon: ShoppingBag,
+		},
+		{
+			label: "Ecommerce SEO",
+			href: "/services/seo/ecommerce",
+			description: "Product and category page rankings",
+			icon: ShoppingCart,
+		},
+		{
+			label: "Technical SEO",
+			href: "/services/seo/technical",
+			description: "Fix the foundations, boost rankings",
+			icon: Code2,
+		},
+		{
+			label: "Local SEO",
+			href: "/services/seo/local",
+			description: "Dominate your local search results",
+			icon: MapPin,
+		},
+		{
+			label: "SEO Audit",
+			href: "/services/seo/audit",
+			description: "Uncover what's holding your site back",
+			icon: ClipboardList,
+		},
+	],
+};
 
-const solutionGroups = [
+const automationConfig: RichDropdownConfig = {
+	label: "Automation",
+	exploreHref: "/services/marketing-automation",
+	exploreTitle: "Explore Automation",
+	exploreDescription: "Follow-up, lifecycle, and CRM workflows.",
+	sectionLabel: "By workflow",
+	headerIcon: Zap,
+	items: [
+		{
+			label: "Marketing Automation",
+			href: "/services/marketing-automation",
+			description: "Workflows that run while you sleep",
+			icon: Zap,
+		},
+		{
+			label: "Lead Nurturing Campaigns",
+			href: "/services/lead-nurturing",
+			description: "Automated sequences that warm prospects",
+			icon: UserPlus,
+		},
+		{
+			label: "Newsletter Campaigns",
+			href: "/services/newsletter-campaigns",
+			description: "Regular newsletters on autopilot",
+			icon: Newspaper,
+		},
+		{
+			label: "Abandoned Cart Automation",
+			href: "/services/abandoned-cart-automation",
+			description: "Win back customers automatically",
+			icon: ShoppingCart,
+		},
+		{
+			label: "CRM Follow-up Automation",
+			href: "/services/crm-automation",
+			description: "Never miss a follow-up again",
+			icon: RefreshCw,
+		},
+	],
+};
+
+const solutionGroups: SolutionGroup[] = [
 	{
 		title: "Products",
-		description: "Ready systems for operational teams.",
 		href: "/products",
-		icon: Package,
-		items: products,
+		items: [
+			{
+				label: "School Management",
+				href: "/products/school-management",
+				description: "Digital systems for schools",
+				icon: GraduationCap,
+			},
+			{
+				label: "Dental Management",
+				href: "/products/dental-management",
+				description: "Appointment and patient software",
+				icon: Star,
+			},
+			{
+				label: "Clinic Management",
+				href: "/products/clinic-management",
+				description: "End-to-end clinic operations",
+				icon: Heart,
+			},
+			{
+				label: "HR Software",
+				href: "/products/hr-software",
+				description: "Hire, manage and retain talent",
+				icon: Users,
+			},
+			{
+				label: "Employee Management",
+				href: "/products/employee-management",
+				description: "Track performance and attendance",
+				icon: UserCheck,
+			},
+		],
 	},
 	{
 		title: "Industries",
-		description: "Digital solutions for common business verticals.",
 		href: "/industries",
-		icon: Building2,
-		items: industries,
+		items: [
+			{
+				label: "Education",
+				href: "/industries/education",
+				description: "Tech solutions for learning",
+				icon: BookOpen,
+			},
+			{
+				label: "Health",
+				href: "/industries/health",
+				description: "Digital health and clinic tools",
+				icon: Heart,
+			},
+			{
+				label: "Travel",
+				href: "/industries/travel",
+				description: "Booking and travel platforms",
+				icon: Plane,
+			},
+			{
+				label: "Banks & Finance",
+				href: "/industries/finance",
+				description: "Secure fintech solutions",
+				icon: Landmark,
+			},
+			{
+				label: "Ecommerce",
+				href: "/industries/ecommerce",
+				description: "Stores that sell and scale",
+				icon: ShoppingBag,
+			},
+			{
+				label: "Manufacturing",
+				href: "/industries/manufacturing",
+				description: "Operations and supply systems",
+				icon: Factory,
+			},
+		],
 	},
 	{
 		title: "Use Cases",
-		description: "Popular outcomes we help teams deliver.",
 		href: "/use-cases",
-		icon: BriefcaseBusiness,
-		items: useCases,
+		items: [
+			{
+				label: "Lead Generation",
+				href: "/use-cases/lead-generation",
+				description: "Capture and qualify more leads",
+				icon: Target,
+			},
+			{
+				label: "Online Booking",
+				href: "/use-cases/online-booking",
+				description: "Smart scheduling for any business",
+				icon: CalendarCheck,
+			},
+			{
+				label: "Customer Retention",
+				href: "/use-cases/customer-retention",
+				description: "Keep customers coming back",
+				icon: Star,
+			},
+			{
+				label: "Operations Automation",
+				href: "/use-cases/operations-automation",
+				description: "Streamline repetitive work",
+				icon: Settings2,
+			},
+			{
+				label: "Reporting Dashboards",
+				href: "/use-cases/reporting-dashboards",
+				description: "Insights that drive decisions",
+				icon: BarChart3,
+			},
+		],
 	},
 ];
 
@@ -138,97 +360,69 @@ const resourceLinks = [
 	{ label: "About", href: "/about" },
 ];
 
-type MenuGroup = {
-	title: string;
-	description: string;
-	href: string;
-	icon: typeof Code2;
-	items: { label: string; href: string }[];
-};
+// ─── desktop dropdown components ─────────────────────────────────────────────
 
-function MegaMenu({
-	label,
-	groups,
-	feature,
-}: {
-	label: string;
-	groups: MenuGroup[];
-	feature: {
-		title: string;
-		description: string;
-		href: string;
-		action: string;
-	};
-}) {
+function RichDropdown({ config }: { config: RichDropdownConfig }) {
+	const HeaderIcon = config.headerIcon;
 	return (
 		<div className="group relative">
 			<button
 				type="button"
-				className="inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 font-medium text-[13.5px] text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-800/60 dark:hover:text-white"
+				className="inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 font-medium text-[15px] text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-800/60 dark:hover:text-white"
 			>
-				{label}
+				{config.label}
 				<ChevronDown className="size-3.5 opacity-50 transition-transform duration-200 group-hover:rotate-180" />
 			</button>
 
-			<div className="invisible absolute top-full left-0 z-30 w-[min(92vw,980px)] pt-3 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-				<div className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-2xl dark:border-neutral-800 dark:bg-neutral-950 dark:shadow-black/60">
-					<div className="grid lg:grid-cols-[1fr_15rem]">
-						<div className="grid gap-2 p-3 md:grid-cols-2">
-							{groups.map((group) => {
-								const Icon = group.icon;
-
-								return (
-									<div key={group.title} className="rounded-2xl p-3">
-										<a
-											href={group.href}
-											className="group/title mb-2 flex items-start gap-3 rounded-xl p-2 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800/60"
-										>
-											<span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
-												<Icon className="size-4" />
-											</span>
-											<span>
-												<span className="flex items-center font-semibold text-neutral-950 text-sm dark:text-white">
-													{group.title}
-													<ChevronRight className="ml-1 size-3 opacity-40 transition-transform group-hover/title:translate-x-0.5" />
-												</span>
-												<span className="mt-1 block text-[12px] text-neutral-500 leading-relaxed dark:text-neutral-400">
-													{group.description}
-												</span>
-											</span>
-										</a>
-										<div className="grid gap-0.5">
-											{group.items.map((item) => (
-												<a
-													key={item.label}
-													href={item.href}
-													className="rounded-lg px-3 py-1.5 text-[13px] text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-800/60 dark:hover:text-white"
-												>
-													{item.label}
-												</a>
-											))}
-										</div>
-									</div>
-								);
-							})}
-						</div>
-
-						<a
-							href={feature.href}
-							className="flex flex-col justify-between border-neutral-200 border-t bg-neutral-950 p-5 text-white transition-colors hover:bg-neutral-900 lg:border-t-0 lg:border-l dark:border-neutral-800 dark:bg-neutral-900 dark:hover:bg-neutral-800"
-						>
-							<span>
-								<span className="block font-semibold text-[15px]">
-									{feature.title}
-								</span>
-								<span className="mt-2 block text-[13px] text-white/60 leading-relaxed">
-									{feature.description}
-								</span>
+			<div className="invisible absolute top-full left-1/2 z-30 w-72 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+				<div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xl dark:border-neutral-800 dark:bg-neutral-950 dark:shadow-black/50">
+					{/* Explore all header */}
+					<a
+						href={config.exploreHref}
+						className="flex items-start gap-3 border-neutral-100 border-b p-4 transition-colors hover:bg-neutral-50 dark:border-neutral-800/70 dark:hover:bg-neutral-900"
+					>
+						<span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-neutral-100 text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300">
+							<HeaderIcon className="size-4" />
+						</span>
+						<span>
+							<span className="block font-semibold text-[14px] text-neutral-950 dark:text-white">
+								{config.exploreTitle}
 							</span>
-							<span className="mt-8 inline-flex items-center font-medium text-[13px]">
-								{feature.action}
-								<ChevronRight className="ml-1.5 size-3.5 opacity-60" />
+							<span className="mt-0.5 block text-[12px] text-neutral-500 dark:text-neutral-400">
+								{config.exploreDescription}
 							</span>
-						</a>
+						</span>
+					</a>
+
+					{/* Section label */}
+					<p className="px-4 pt-3 pb-1.5 font-semibold text-[11px] text-neutral-400 uppercase tracking-wider dark:text-neutral-500">
+						{config.sectionLabel}
+					</p>
+
+					{/* Items */}
+					<div className="pb-2">
+						{config.items.map((item) => {
+							const Icon = item.icon;
+							return (
+								<a
+									key={item.label}
+									href={item.href}
+									className="flex items-start gap-3 px-4 py-2.5 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
+								>
+									<span className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">
+										<Icon className="size-3.5" />
+									</span>
+									<span>
+										<span className="block font-medium text-[13px] text-neutral-800 dark:text-neutral-200">
+											{item.label}
+										</span>
+										<span className="block text-[12px] text-neutral-400 dark:text-neutral-500">
+											{item.description}
+										</span>
+									</span>
+								</a>
+							);
+						})}
 					</div>
 				</div>
 			</div>
@@ -236,14 +430,65 @@ function MegaMenu({
 	);
 }
 
-function MobileSection({
+function SolutionsDropdown({ groups }: { groups: SolutionGroup[] }) {
+	return (
+		<div className="group relative">
+			<button
+				type="button"
+				className="inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 font-medium text-[15px] text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-800/60 dark:hover:text-white"
+			>
+				Solutions
+				<ChevronDown className="size-3.5 opacity-50 transition-transform duration-200 group-hover:rotate-180" />
+			</button>
+
+			<div className="invisible absolute top-full left-1/2 z-30 w-[780px] -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+				<div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xl dark:border-neutral-800 dark:bg-neutral-950 dark:shadow-black/50">
+					{/* Three-column grid */}
+					<div className="grid grid-cols-3 divide-x divide-neutral-100 dark:divide-neutral-800">
+						{groups.map((group) => (
+							<div key={group.title} className="py-4">
+								<p className="px-5 pb-2 font-semibold text-[11px] text-neutral-400 uppercase tracking-wider dark:text-neutral-500">
+									{group.title}
+								</p>
+								{group.items.map((item) => {
+									const Icon = item.icon;
+									return (
+										<a
+											key={item.label}
+											href={item.href}
+											className="flex items-start gap-3 px-5 py-2.5 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900/60"
+										>
+											<Icon className="mt-0.5 size-4 shrink-0 text-neutral-400 dark:text-neutral-500" />
+											<span>
+												<span className="block font-semibold text-[13px] text-neutral-800 dark:text-neutral-200">
+													{item.label}
+												</span>
+												<span className="block text-[12px] text-neutral-400 leading-snug dark:text-neutral-500">
+													{item.description}
+												</span>
+											</span>
+										</a>
+									);
+								})}
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+// ─── mobile components ────────────────────────────────────────────────────────
+
+function MobileAccordion({
 	title,
-	groups,
+	items,
 	isOpen,
 	onToggle,
 }: {
 	title: string;
-	groups: MenuGroup[];
+	items: RichItem[];
 	isOpen: boolean;
 	onToggle: () => void;
 }) {
@@ -263,17 +508,72 @@ function MobileSection({
 				className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
 			>
 				<div className="overflow-hidden">
-					<div className="grid gap-2 pt-1 pb-2 pl-3">
+					<div className="grid gap-0.5 pt-1 pb-2 pl-3">
+						{items.map((item) => {
+							const Icon = item.icon;
+							return (
+								<a
+									key={item.label}
+									href={item.href}
+									className="flex items-center gap-2.5 rounded-lg px-3 py-2 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800/60"
+								>
+									<span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">
+										<Icon className="size-3" />
+									</span>
+									<span>
+										<span className="block font-medium text-[13px] text-neutral-700 dark:text-neutral-300">
+											{item.label}
+										</span>
+										<span className="block text-[11px] text-neutral-400 dark:text-neutral-500">
+											{item.description}
+										</span>
+									</span>
+								</a>
+							);
+						})}
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+function MobileSolutionsAccordion({
+	groups,
+	isOpen,
+	onToggle,
+}: {
+	groups: SolutionGroup[];
+	isOpen: boolean;
+	onToggle: () => void;
+}) {
+	return (
+		<div>
+			<button
+				type="button"
+				onClick={onToggle}
+				className="flex w-full items-center justify-between rounded-lg px-3 py-2 font-medium text-[14px] text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-300 dark:hover:bg-neutral-800/60 dark:hover:text-white"
+			>
+				Solutions
+				<ChevronDown
+					className={`size-3.5 opacity-50 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+				/>
+			</button>
+			<div
+				className={`grid transition-all duration-300 ease-in-out ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+			>
+				<div className="overflow-hidden">
+					<div className="grid gap-3 pt-1 pb-2 pl-3">
 						{groups.map((group) => (
 							<div key={group.title}>
 								<a
 									href={group.href}
-									className="block rounded-lg px-3 py-1.5 font-semibold text-[13px] text-neutral-800 transition-colors hover:bg-neutral-100 dark:text-neutral-200 dark:hover:bg-neutral-800/60"
+									className="block rounded-lg px-3 py-1 font-semibold text-[11px] text-neutral-400 uppercase tracking-wider transition-colors hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-300"
 								>
 									{group.title}
 								</a>
-								<div className="grid gap-0.5 pl-2">
-									{group.items.slice(0, 5).map((item) => (
+								<div className="grid gap-0.5">
+									{group.items.map((item) => (
 										<a
 											key={item.label}
 											href={item.href}
@@ -300,55 +600,76 @@ function MobileMenu() {
 		setOpenSection((prev) => (prev === title ? null : title));
 
 	return (
-		<div className="relative lg:hidden">
-			<button
-				type="button"
-				onClick={() => setMenuOpen((o) => !o)}
-				aria-label="Toggle menu"
-				className="flex size-9 items-center justify-center rounded-full bg-neutral-100 text-neutral-700 transition-colors hover:bg-neutral-200 hover:text-neutral-950 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-white"
-			>
-				<Menu className="size-4" />
-			</button>
+		<div className="relative flex items-center gap-2 lg:hidden">
+			<ModeToggle />
+			<div className="relative">
+				<button
+					type="button"
+					onClick={() => setMenuOpen((o) => !o)}
+					aria-label="Toggle menu"
+					className="flex size-9 items-center justify-center rounded-full bg-neutral-100 text-neutral-700 transition-colors hover:bg-neutral-200 hover:text-neutral-950 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:hover:text-white"
+				>
+					<Menu className="size-4" />
+				</button>
 
-			{menuOpen && (
-				<div className="absolute right-0 z-30 mt-3 max-h-[calc(100vh-6rem)] w-[min(86vw,24rem)] overflow-y-auto rounded-2xl border border-neutral-200 bg-white p-2 shadow-xl dark:border-neutral-800 dark:bg-neutral-950 dark:shadow-black/50">
-					<MobileSection
-						title="Services"
-						groups={serviceGroups}
-						isOpen={openSection === "Services"}
-						onToggle={() => toggleSection("Services")}
-					/>
-					<MobileSection
-						title="Solutions"
-						groups={solutionGroups}
-						isOpen={openSection === "Solutions"}
-						onToggle={() => toggleSection("Solutions")}
-					/>
-					<div className="my-1 border-neutral-200 border-t dark:border-neutral-800" />
-					{resourceLinks.map((item) => (
-						<a
-							key={item.label}
-							href={item.href}
-							className="block rounded-lg px-3 py-2 font-medium text-[14px] text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-300 dark:hover:bg-neutral-800/60 dark:hover:text-white"
-						>
-							{item.label}
-						</a>
-					))}
-					<div className="mt-2 flex items-center gap-3 border-neutral-200 border-t pt-3 dark:border-neutral-800">
-						<ModeToggle />
-						<a
-							href="/contact"
-							className="flex flex-1 items-center justify-center rounded-full bg-neutral-950 px-4 py-2 font-medium text-[13px] text-white transition-colors duration-200 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100"
-						>
-							<Mail className="mr-2 size-3.5 opacity-70" />
-							Contact
-						</a>
+				{menuOpen && (
+					<div className="absolute right-0 z-30 mt-3 max-h-[calc(100vh-6rem)] w-[min(86vw,24rem)] overflow-y-auto rounded-2xl border border-neutral-200 bg-white p-2 shadow-xl dark:border-neutral-800 dark:bg-neutral-950 dark:shadow-black/50">
+						<MobileAccordion
+							title="Build"
+							items={buildConfig.items}
+							isOpen={openSection === "Build"}
+							onToggle={() => toggleSection("Build")}
+						/>
+						<MobileAccordion
+							title="Marketing"
+							items={marketingConfig.items}
+							isOpen={openSection === "Marketing"}
+							onToggle={() => toggleSection("Marketing")}
+						/>
+						<MobileAccordion
+							title="SEO"
+							items={seoConfig.items}
+							isOpen={openSection === "SEO"}
+							onToggle={() => toggleSection("SEO")}
+						/>
+						<MobileAccordion
+							title="Automation"
+							items={automationConfig.items}
+							isOpen={openSection === "Automation"}
+							onToggle={() => toggleSection("Automation")}
+						/>
+						<MobileSolutionsAccordion
+							groups={solutionGroups}
+							isOpen={openSection === "Solutions"}
+							onToggle={() => toggleSection("Solutions")}
+						/>
+						<div className="my-1 border-neutral-200 border-t dark:border-neutral-800" />
+						{resourceLinks.map((item) => (
+							<a
+								key={item.label}
+								href={item.href}
+								className="block rounded-lg px-3 py-2 font-medium text-[14px] text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-300 dark:hover:bg-neutral-800/60 dark:hover:text-white"
+							>
+								{item.label}
+							</a>
+						))}
+						<div className="mt-2 border-neutral-200 border-t pt-3 dark:border-neutral-800">
+							<a
+								href="/contact"
+								className="flex w-full items-center justify-center rounded-full bg-neutral-950 px-4 py-2 font-medium text-[13px] text-white transition-colors duration-200 hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100"
+							>
+								<Mail className="mr-2 size-3.5 opacity-70" />
+								Contact
+							</a>
+						</div>
 					</div>
-				</div>
-			)}
+				)}
+			</div>
 		</div>
 	);
 }
+
+// ─── navbar ───────────────────────────────────────────────────────────────────
 
 export default function Navbar() {
 	const [isScrolled, setIsScrolled] = useState(false);
@@ -393,34 +714,17 @@ export default function Navbar() {
 						/>
 					</a>
 
-					<div className="hidden flex-1 items-center gap-0.5 pl-6 lg:flex">
-						<MegaMenu
-							label="Services"
-							groups={serviceGroups}
-							feature={{
-								title: "Plan a service package",
-								description:
-									"Combine software, SEO, marketing, and automation into one practical growth roadmap.",
-								href: "/contact",
-								action: "Talk to us",
-							}}
-						/>
-						<MegaMenu
-							label="Solutions"
-							groups={solutionGroups}
-							feature={{
-								title: "Need something specific?",
-								description:
-									"We can tailor systems for education, health, ecommerce, operations, and service teams.",
-								href: "/works",
-								action: "View work",
-							}}
-						/>
+					<div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-0.5 lg:flex">
+						<RichDropdown config={buildConfig} />
+						<RichDropdown config={marketingConfig} />
+						<RichDropdown config={seoConfig} />
+						<RichDropdown config={automationConfig} />
+						<SolutionsDropdown groups={solutionGroups} />
 						{resourceLinks.map((item) => (
 							<a
 								key={item.label}
 								href={item.href}
-								className="rounded-full px-3.5 py-1.5 font-medium text-[13.5px] text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-800/60 dark:hover:text-white"
+								className="rounded-full px-3.5 py-1.5 font-medium text-[15px] text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-800/60 dark:hover:text-white"
 							>
 								{item.label}
 							</a>
