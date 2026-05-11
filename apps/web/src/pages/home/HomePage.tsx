@@ -1,6 +1,6 @@
 import { ArrowRight, ArrowUpRight, Zap } from "lucide-react";
 
-import { Button } from "@Hiver-Technology/ui/components/button";
+import { LiquidMetalButton } from "@Hiver-Technology/ui/components/liquid-metal-button";
 import ShaderBackground from "@/components/shader-background";
 
 export default function HomePage() {
@@ -28,8 +28,8 @@ export default function HomePage() {
             <span className="block text-4xl font-semibold tracking-tight text-amber-900 dark:text-amber-100 md:text-6xl">
               The Agency Behind
             </span>
-            <span className="block text-3xl font-normal font-serif italic text-amber-900/80 dark:text-amber-100 md:text-5xl">
-              Your Next Big Win
+            <span className="animated-gradient-text block text-3xl font-normal font-serif italic md:text-5xl">
+              your next big win
             </span>
           </h1>
           <p className="mx-auto max-w-2xl text-pretty text-base text-muted-foreground dark:text-amber-100/70 md:text-lg">
@@ -49,13 +49,7 @@ export default function HomePage() {
               <ArrowUpRight className="absolute size-4 translate-x-2 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
             </span>
           </button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="h-[52px] min-w-[160px] rounded-full border border-amber-600/40 bg-amber-600/5 px-6 text-sm font-semibold text-amber-900/90 hover:bg-amber-700/15 dark:text-amber-100"
-          >
-            View work
-          </Button>
+          <LiquidMetalButton label="View work" />
         </div>
       </div>
     </section>
