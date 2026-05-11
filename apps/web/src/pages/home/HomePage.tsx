@@ -1,7 +1,6 @@
-import { Zap } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Zap } from "lucide-react";
 
 import { Button } from "@Hiver-Technology/ui/components/button";
-import GradientButton from "@Hiver-Technology/ui/components/button-1";
 import ShaderBackground from "@/components/shader-background";
 
 export default function HomePage() {
@@ -40,17 +39,20 @@ export default function HomePage() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <GradientButton
-            width="190px"
-            height="52px"
-            className="border border-amber-500/60 text-sm font-semibold [--color-background:#f59e0b] [--color-text:#ffffff]"
+          <button
+            type="button"
+            className="group inline-flex h-[52px] min-w-[160px] items-center justify-center gap-3 rounded-xl bg-amber-600 px-6 text-sm font-semibold text-amber-50 shadow-[0_12px_30px_rgba(245,158,11,0.3)] transition hover:bg-amber-700"
           >
-            Get Started
-          </GradientButton>
+            Get started
+            <span className="relative flex size-9 items-center justify-center overflow-hidden rounded-md bg-neutral-900 text-amber-50">
+              <ArrowRight className="size-4 transition-all duration-200 group-hover:-translate-x-2 group-hover:opacity-0" />
+              <ArrowUpRight className="absolute size-4 translate-x-2 translate-y-1 opacity-0 transition-all duration-200 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
+            </span>
+          </button>
           <Button
             size="lg"
             variant="outline"
-            className="min-w-[190px] h-[52px] rounded-full border border-amber-500/40 bg-amber-500/5 px-8 text-sm font-semibold text-amber-900 hover:bg-amber-500/15 dark:text-amber-100"
+            className="h-[52px] min-w-[160px] rounded-full border border-amber-600/40 bg-amber-600/5 px-6 text-sm font-semibold text-amber-900/90 hover:bg-amber-700/15 dark:text-amber-100"
           >
             View work
           </Button>
