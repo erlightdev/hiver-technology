@@ -22,19 +22,19 @@ export default function HomePage() {
 
         <div className="mt-8 space-y-4">
           <p className="text-xs font-semibold uppercase tracking-[0.4em] text-amber-900/70 dark:text-amber-100/70">
-            We support
+            Growth of your business
           </p>
           <h1 className="text-balance font-semibold text-4xl leading-tight text-foreground drop-shadow-[0_8px_30px_rgba(0,0,0,0.35)] dark:text-amber-50 dark:drop-shadow-[0_8px_30px_rgba(0,0,0,0.75)] md:text-6xl">
-            <span className="block text-5xl font-semibold tracking-tight text-amber-900 dark:text-amber-100 md:text-7xl">
-              growth
+            <span className="block text-4xl font-semibold tracking-tight text-amber-900 dark:text-amber-100 md:text-6xl">
+              The Agency Behind
             </span>
-            <span className="block text-2xl font-medium text-amber-900/70 dark:text-amber-100/70 md:text-3xl">
-              of your business
+            <span className="block text-3xl font-normal font-serif italic text-amber-900/80 dark:text-amber-100 md:text-5xl">
+              Your Next Big Win
             </span>
           </h1>
           <p className="mx-auto max-w-2xl text-pretty text-base text-muted-foreground dark:text-amber-100/70 md:text-lg">
-            We build scalable digital products and performance ecosystems that
-            transform how brands grow in a rapidly evolving market.
+            We design and deliver high-impact experiences that help ambitious
+            teams win their market.
           </p>
         </div>
 
